@@ -14,21 +14,25 @@ wss.on('connection', ws => {
         console.log('received: %s', message);
         MongoClient.connect(url, {
             useNewUrlParser: true
-        }, function (err, client) {
+        }, (err, client) => {
             if (err) console.log(err);
-            console.log("Connected correctly to mongo server");
+            if (client) {
+                console.log("Connected correctly to mongo server");
 
-            const db = client.db(dbName);
+                const db = client.db(dbName);
 
-            const collection = db.collection('documents');
+                const collection = db.collection('documents');
 
-            collection.insertOne({
-                "message": JSON.parse(message)
-            }, (err, result) => {
-                if (err) console.log(err);
-                console.log("document inserted");
-                ws.send(message);
-            });
+                collection.insertOne({
+                    "message": JSON.parse(message)
+                }, (err, result) => {
+                    if (err) console.log(err);
+                    if (result) {
+                        console.log("document inserted");
+                        ws.send(message);
+                    }
+                });
+            }
         });
     });
 });

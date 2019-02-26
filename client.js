@@ -16,7 +16,7 @@ ws.on('open', () => {
     rl.on('close', () => {
         console.log("good bye");
         process.exit(0);
-    })
+    });
 });
 
 ws.on('message', data => {

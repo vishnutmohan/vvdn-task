@@ -8,12 +8,12 @@ class Stack {
     }
 
     pop() {
+        if (this.items.length === 0)
+            return "No element present in the stack";
         return this.items.pop();
     }
 
     print() {
-        if (this.items.length === 0)
-            return "No element present in the stack";
         return this.items;
     }
 
